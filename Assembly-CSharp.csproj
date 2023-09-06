@@ -56,10 +56,10 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\DataPointPlotter.cs" />
     <Compile Include="Assets\MouseRotation.cs" />
-    <Compile Include="Assets\YearSliderController.cs" />
     <Compile Include="Assets\SceneController.cs" />
+    <Compile Include="Assets\YearSliderController.cs" />
+    <Compile Include="Assets\DataPointPlotter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

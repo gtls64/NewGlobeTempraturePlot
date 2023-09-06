@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class DataPointPlotter : MonoBehaviour
 {
-    public Transform globe; // Reference to the globe GameObject
-    public GameObject dataPointPrefab; // Reference to the data point prefab
-    public TextAsset csvFile; // Assign your CSV file in the Inspector
+    public Transform globe; 
+    public GameObject dataPointPrefab; 
+    public TextAsset csvFile; 
 
-    //colours of the plotting points
+    //colours 
 
     public Color minColor;
     public Color midColor;
@@ -22,15 +22,14 @@ public class DataPointPlotter : MonoBehaviour
     public float highTempAnm = 2.15f;
 
 
-    //year of the points
-
+    //year
     [Range(1900, 2022)]
     public int YearNumber;
 
     private List<CSVDataPoint> dataPoints = new List<CSVDataPoint>();
-    private float currentYear = 1900;//nitial year
-    private float minXPosition = -10.0f; // Define the minimum x position of the globe
-    private float maxXPosition = 10.0f;  // Define the maximum x position of the globe
+    private float currentYear = 1900;
+    private float minXPosition = -10.0f; 
+    private float maxXPosition = 10.0f;  
 
     [System.Serializable]
     public class CSVDataPoint
@@ -57,7 +56,7 @@ public class DataPointPlotter : MonoBehaviour
 
     void Update()
     {
-        // Change the year based on the x position of the globe
+        
         ChangeYearBasedOnXPosition(globe);
     }
 
@@ -75,7 +74,7 @@ public class DataPointPlotter : MonoBehaviour
                     float.TryParse(values[2], out float longitude) &&
                     float.TryParse(values[3], out float temperatureAnomaly))
                 {
-                    // Check if latitude is positive (in the northern hemisphere)
+                    
                     if ((latitude >= 0) || (latitude < 0))
                     {
                         CSVDataPoint dataPoint = new CSVDataPoint(year, latitude, longitude, temperatureAnomaly);
@@ -94,7 +93,7 @@ public class DataPointPlotter : MonoBehaviour
     {
         foreach (CSVDataPoint dataPoint in dataPoints)
         {
-            if (dataPoint.Year == Mathf.RoundToInt(currentYear)) // Round currentYear to the nearest integer
+            if (dataPoint.Year == Mathf.RoundToInt(currentYear)) 
             {
                 Vector3 position = CalculatePositionOnGlobe(dataPoint.Latitude, dataPoint.Longitude);
                 GameObject dataPointObj = Instantiate(dataPointPrefab, position, Quaternion.identity);
@@ -106,8 +105,8 @@ public class DataPointPlotter : MonoBehaviour
 
     Vector3 CalculatePositionOnGlobe(float latitude, float longitude)
     {
-        // Assuming a simple spherical globe centered at (0, 0, 0)
-        float radius = 10f; // Adjust the radius according to your globe size
+        
+        float radius = 10f; 
         float latRad = latitude * Mathf.Deg2Rad;
         float lonRad = longitude * Mathf.Deg2Rad;
 
@@ -124,21 +123,21 @@ public class DataPointPlotter : MonoBehaviour
 
         if (temperatureAnomaly <= minTempAnm)
         {
-            return minColor; // Blue for temperatures less than or equal to -5
+            return minColor; 
         }
         else if (temperatureAnomaly >= highTempAnm)
         {
-            return maxColor; // Red for temperatures greater than or equal to 5
+            return maxColor; 
         }
         else if (temperatureAnomaly < midTempAnm)
         {
-            // Interpolate between blue and yellow for temperatures between -5 and 0
+            
             float t = Mathf.InverseLerp(highTempAnm, midTempAnm, temperatureAnomaly);
             return Color.Lerp(minColor, minColor, t);
         }
         else
         {
-            // Interpolate between yellow and red for temperatures between 0 and 5
+            
             float t = Mathf.InverseLerp(midTempAnm, highTempAnm, temperatureAnomaly);
             return Color.Lerp(midColor, maxColor, t);
         }
@@ -150,15 +149,11 @@ public class DataPointPlotter : MonoBehaviour
 
     void ChangeYearBasedOnXPosition(Transform objectToUse)
     {
-        // Get the x position of the object and map it to the desired year range
-        //currentYear = Mathf.Lerp(1900, 2022, Mathf.InverseLerp(minXPosition, maxXPosition, objectToUse.position.x));
-
+        
         currentYear = YearNumber;
-
-        // Destroy all existing data points in the scene
+               
         DestroyDataPoints();
-
-        // Plot data points for the current year
+            
         PlotDataPoints();
     }
 

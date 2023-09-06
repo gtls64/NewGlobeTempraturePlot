@@ -24,22 +24,22 @@ public class YearSliderController : MonoBehaviour
 
     private void UpdateYearNumber(float value)
     {
-        // Update the YearNumber variable in the DataPointPlotter script
+        // Update-YearNumber
         dataPointPlotter.YearNumber = (int)value;
 
-        // Update the TMP Text component with the new YearNumber
+        
         UpdateYearText(dataPointPlotter.YearNumber);
 
         if (isSliderBeingUsed)
         {
-            // Disable the script when using the slider
+            
             scriptToDisable.enabled = false;
         }
     }
 
     private void UpdateYearText(int year)
     {
-        // Update the TMP Text component with the current YearNumber
+        
         yearText.text = "Year: " + year.ToString();
     }
 
@@ -52,7 +52,7 @@ public class YearSliderController : MonoBehaviour
     {
         isSliderBeingUsed = false;
 
-        // Re-enable the script when not using the slider
+        
         scriptToDisable.enabled = true;
     }
 }
